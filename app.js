@@ -112,20 +112,12 @@ function renderNav(active, user) {
     `<a class="nav-link ${active === id ? "active" : ""}" href="${href}">${label}</a>`;
   el.innerHTML = `
     <div class="container nav-inner">
-      <a class="brand" href="/dashboard.html">Campus<span>Connect</span></a>
+      <a class="brand" href="/dashboard.html">CampusConnect</a>
       <nav class="nav-links">
         ${link("dashboard", "/dashboard.html", "Dashboard")}
-        ${user && user.role === "admin" ? "" : link("create", "/create.html", "New Issue")}
-        ${user ? link("messages", "/messages.html", 'Messages<span id="msg-count" class="count" hidden></span>') : ""}
-        ${link("faq", "/faq.html", "FAQ")}
+        ${link("create", "/create.html", "New Issue")}
         ${link("profile", "/profile.html", "Profile")}
       </nav>
-      <div class="nav-user tag">${user ? esc(user.name) : ""}${user && user.role === "admin" ? ' <span class="badge admin">Admin</span>' : ""}</div>
+      <div class="nav-user tag">${user ? esc(user.name) : ""}</div>
     </div>`;
-  if (user) {
-    api("/messages/unread").then((r) => {
-      const c = document.getElementById("msg-count");
-      if (c && r.unread > 0) { c.textContent = r.unread; c.hidden = false; }
-    }).catch(() => {});
-  }
 }
